@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ✅ MONETAG VERIFICATION -->
+<meta name="monetag" content="5981e855b7afc7269ed826a6103d70d9">
+
+<title>Unlock Reward</title>
+
+<style>
+body {
+    margin: 0;
+    background: #0f172a;
+    color: white;
+    font-family: Arial;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 90%;
+    max-width: 400px;
+    background: #1e293b;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 10px;
+    background: #6366f1;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#reward { display: none; }
+.warning { color: #f87171; }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>🎁 Unlock Reward</h2>
+    <p>Click and wait to unlock</p>
+
+    <button id="btn">Watch & Unlock</button>
+
+    <p id="status"></p>
+    <p id="warning" class="warning"></p>
+
+    <div id="reward">
+        <h3>✅ Reward Unlocked</h3>
+        <img src="https://i.imgur.com/8Km9tLL.jpg" style="width:100%;border-radius:10px;">
+        <button onclick="share()">Share 😏</button>
+    </div>
+</div>
+
+<script>
+// =========================
+// SETTINGS
+// =========================
+
+// 🔥 OPTIONAL backup smartlink (you can keep empty if using only Monetag)
+const AD_LINK = "https://your-direct-link.com";
+
+let leftPage = false;
+let adblockDetected = false;
+
+// =========================
+// ADBLOCK DETECTION
+// =========================
+function detectAdBlock() {
+    let test = document.createElement("div");
+    test.className = "adsbox";
+    test.style.height = "1px";
+    document.body.appendChild(test);
+
+    setTimeout(() => {
+        if (test.offsetHeight === 0) {
+            adblockDetected = true;
+            document.getElementById("warning").innerText =
+                "⚠️ Disable AdBlock to continue!";
+        }
+        test.remove();
+    }, 100);
+}
+
+// =========================
+// TAB DETECTION
+// =========================
+document.addEventListener("visibilitychange", () => {
+    if (document.hidden) leftPage = true;
+});
+
+// =========================
+// START AD FLOW
+// =========================
+function startAd() {
+
+    if (adblockDetected) {
+        document.getElementById("warning").innerText =
+            "❌ Disable AdBlock!";
+        return;
+    }
+
+    document.getElementById("status").innerText = "Opening ad...";
+
+    // 🔥 Monetag usually auto triggers ads
+    // Backup smartlink (optional)
+    if (AD_LINK !== "") {
+        window.open(AD_LINK, "_blank");
+    }
+
+    setTimeout(() => {
+        if (!leftPage) {
+            document.getElementById("status").innerText =
+                "⚠️ Please interact with the ad!";
+            return;
+        }
+
+        startTimer();
+    }, 2000);
+}
+
+// =========================
+// TIMER
+// =========================
+function startTimer() {
+    let time = 10;
+
+    const interval = setInterval(() => {
+        document.getElementById("status").innerText =
+            "Wait " + time + " sec...";
+
+        time--;
+
+        if (time < 0) {
+            clearInterval(interval);
+            unlockReward();
+        }
+    }, 1000);
+}
+
+// =========================
+// UNLOCK
+// =========================
+function unlockReward() {
+    document.getElementById("status").innerText = "";
+    document.getElementById("reward").style.display = "block";
+}
+
+// =========================
+// SHARE
+// =========================
+function share() {
+    const msg = "😂 Try this: " + window.location.href;
+    navigator.clipboard.writeText(msg);
+    window.open("https://wa.me/?text=" + encodeURIComponent(msg));
+}
+
+// =========================
+// INIT
+// =========================
+document.addEventListener("DOMContentLoaded", () => {
+    detectAdBlock();
+    document.getElementById("btn").onclick = startAd;
+});
+</script>
+
+<!-- ✅ MONETAG AD SCRIPT (REPLACE WITH YOUR REAL ONE) -->
+<script src="//YOUR-MONETAG-SCRIPT.js"></script>
+
+</body>
+</html>
