@@ -4,56 +4,58 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- ✅ MONETAG VERIFICATION -->
-<meta name="monetag" content="857fc32467ef5b3034223e4139aa3218">
+<!-- ✅ MONETAG VERIFY -->
+<meta name="monetag" content="5981e855b7afc7269ed826a6103d70d9">
 
 <title>Unlock Reward</title>
 
 <style>
 body {
-    margin: 0;
-    background: #0f172a;
-    color: white;
-    font-family: Arial;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    margin:0;
+    background:#0f172a;
+    color:white;
+    font-family:Arial;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
 }
 
 .container {
-    width: 90%;
-    max-width: 400px;
-    background: #1e293b;
-    padding: 25px;
-    border-radius: 15px;
-    text-align: center;
+    width:90%;
+    max-width:400px;
+    background:#1e293b;
+    padding:25px;
+    border-radius:15px;
+    text-align:center;
 }
 
 button {
-    width: 100%;
-    padding: 14px;
-    margin-top: 15px;
-    border: none;
-    border-radius: 10px;
-    background: #6366f1;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
+    width:100%;
+    padding:14px;
+    margin-top:15px;
+    border:none;
+    border-radius:10px;
+    background:#6366f1;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
 }
 
-#reward { display: none; }
-.warning { color: #f87171; }
+#reward { display:none; }
+.warning { color:#f87171; }
+.note { color:#facc15; font-size:14px; }
 </style>
 </head>
-    
-    <script src="//your-monetag-popunder.js"></script>
 
 <body>
 
 <div class="container">
     <h2>🎁 Unlock Reward</h2>
-    <p>Click and wait to unlock</p>
+
+    <p class="note">
+        ⚠️ Open the ad and COME BACK to unlock reward
+    </p>
 
     <button id="btn">Watch & Unlock</button>
 
@@ -61,27 +63,28 @@ button {
     <p id="warning" class="warning"></p>
 
     <div id="reward">
-    <h3>✅ Reward Unlocked</h3>
-    <img src="reward.jpeg" style="width:100%;border-radius:10px;">
-    <button onclick="share()">Share or u gay 😏</button>
-</div>
-      
+        <h3>✅ Reward Unlocked</h3>
+        <!-- 🖼️ YOUR CUSTOM IMAGE -->
+        <img src="reward.jpg" style="width:100%;border-radius:10px;">
+        <p class="note">
+            Apne meethe ko tag karo 🥵🥵
+        </p>
+        <button onclick="share()">Share or you gay 😏</button>
+    </div>
 </div>
 
 <script>
-// =========================
-// SETTINGS
-// =========================
 
-// 🔥 OPTIONAL backup smartlink (you can keep empty if using only Monetag)
+// 🔥 YOUR DIRECT LINK
 const AD_LINK = "https://omg10.com/4/10854420";
 
 let leftPage = false;
+let returned = false;
 let adblockDetected = false;
 
-// =========================
+// =======================
 // ADBLOCK DETECTION
-// =========================
+// =======================
 function detectAdBlock() {
     let test = document.createElement("div");
     test.className = "adsbox";
@@ -92,25 +95,31 @@ function detectAdBlock() {
         if (test.offsetHeight === 0) {
             adblockDetected = true;
             document.getElementById("warning").innerText =
-                "⚠️ Disable AdBlock to continue!";
+                "❌ Disable AdBlock to continue!";
         }
         test.remove();
     }, 100);
 }
 
-// =========================
+// =======================
 // TAB DETECTION
-// =========================
+// =======================
 document.addEventListener("visibilitychange", () => {
-    if (document.hidden) leftPage = true;
+
+    if (document.hidden) {
+        leftPage = true;
+    }
+
+    if (!document.hidden && leftPage && !returned) {
+        returned = true;
+        startTimer(); // ✅ start ONLY after return
+    }
 });
 
-// =========================
-// START AD FLOW
-// ========================
-
+// =======================
+// START AD
+// =======================
 function startAd() {
-    window.open("https://omg10.com/4/10854420", "_blank");
 
     if (adblockDetected) {
         document.getElementById("warning").innerText =
@@ -118,41 +127,18 @@ function startAd() {
         return;
     }
 
-    document.getElementById("status").innerText = "Loading ad...";
+    document.getElementById("status").innerText = "Opening ad...";
 
-    // 🎲 RANDOM SYSTEM
-    let adType = Math.random() < 0.7 ? "click" : "auto";
-
-    if (adType === "click") {
-        document.getElementById("status").innerText = "Opening ad...";
-
-        // CLICK AD
-        window.open("https://omg10.com/4/10854420", "_blank");
-    } else {
-        document.getElementById("status").innerText = "Loading video ad...";
-        
-        // AUTO AD (Monetag handles it)
-        // no manual open needed
-    }
-    if (adType === "auto") {
-    leftPage = true; // bypass check for auto ads
-    }
-
-    setTimeout(() => {
-        if (!leftPage && adType === "click") {
-            document.getElementById("status").innerText =
-                "⚠️ You must interact with ad!";
-            return;
-        }
-
-        startTimer();
-    }, 2000);
+    // 🔥 Anti-block trick
+    let win = window.open("", "_blank");
+    win.location.href = AD_LINK;
 }
-// =========================
+
+// =======================
 // TIMER
-// =========================
+// =======================
 function startTimer() {
-    let time = 10;
+    let time = 7;
 
     const interval = setInterval(() => {
         document.getElementById("status").innerText =
@@ -167,34 +153,35 @@ function startTimer() {
     }, 1000);
 }
 
-// =========================
+// =======================
 // UNLOCK
-// =========================
+// =======================
 function unlockReward() {
     document.getElementById("status").innerText = "";
     document.getElementById("reward").style.display = "block";
 }
 
-// =========================
+// =======================
 // SHARE
-// =========================
+// =======================
 function share() {
-    const msg = "😂 Try this: " + window.location.href;
+    const msg = "😂 Tag that bro: " + window.location.href;
     navigator.clipboard.writeText(msg);
     window.open("https://wa.me/?text=" + encodeURIComponent(msg));
 }
 
-// =========================
+// =======================
 // INIT
-// =========================
+// =======================
 document.addEventListener("DOMContentLoaded", () => {
     detectAdBlock();
     document.getElementById("btn").onclick = startAd;
 });
+
 </script>
 
-<!-- ✅ MONETAG AD SCRIPT (REPLACE WITH YOUR REAL ONE) -->
-<script>(function(s){s.dataset.zone='10854417',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+<!-- ✅ MONETAG POPUNDER SCRIPT (PASTE YOUR REAL ONE) -->
+<script src="//YOUR-MONETAG-SCRIPT.js"></script>
 
 </body>
 </html>
