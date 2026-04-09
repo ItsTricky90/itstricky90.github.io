@@ -46,6 +46,8 @@ button {
 .warning { color: #f87171; }
 </style>
 </head>
+    
+    <script src="//your-monetag-popunder.js"></script>
 
 <body>
 
@@ -60,7 +62,7 @@ button {
 
     <div id="reward">
     <h3>✅ Reward Unlocked</h3>
-    <img src="reward.jpg" style="width:100%;border-radius:10px;">
+    <img src="reward.jpeg" style="width:100%;border-radius:10px;">
     <button onclick="share()">Share or u gay 😏</button>
 </div>
       
@@ -105,8 +107,10 @@ document.addEventListener("visibilitychange", () => {
 
 // =========================
 // START AD FLOW
-// =========================
+// ========================
+
 function startAd() {
+    window.open("https://omg10.com/4/10854420", "_blank");
 
     if (adblockDetected) {
         document.getElementById("warning").innerText =
@@ -114,25 +118,36 @@ function startAd() {
         return;
     }
 
-    document.getElementById("status").innerText = "Opening ad...";
+    document.getElementById("status").innerText = "Loading ad...";
 
-    // 🔥 Monetag usually auto triggers ads
-    // Backup smartlink (optional)
-    if (AD_LINK !== "") {
-        window.open(AD_LINK, "_blank");
+    // 🎲 RANDOM SYSTEM
+    let adType = Math.random() < 0.7 ? "click" : "auto";
+
+    if (adType === "click") {
+        document.getElementById("status").innerText = "Opening ad...";
+
+        // CLICK AD
+        window.open("https://omg10.com/4/10854420", "_blank");
+    } else {
+        document.getElementById("status").innerText = "Loading video ad...";
+        
+        // AUTO AD (Monetag handles it)
+        // no manual open needed
+    }
+    if (adType === "auto") {
+    leftPage = true; // bypass check for auto ads
     }
 
     setTimeout(() => {
-        if (!leftPage) {
+        if (!leftPage && adType === "click") {
             document.getElementById("status").innerText =
-                "⚠️ Please interact with the ad!";
+                "⚠️ You must interact with ad!";
             return;
         }
 
         startTimer();
     }, 2000);
 }
-
 // =========================
 // TIMER
 // =========================
