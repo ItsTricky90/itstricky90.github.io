@@ -75,7 +75,7 @@ button {
         ⚠️ OPEN THE AD and COME BACK to unlock reward
     </p>
 
-    <button id="btn">Watch & SEE</button>
+    <button onclick="openAdWindow()">Watch & Unlock</button>
 
     <p id="status"></p>
     <p id="warning" class="warning"></p>
@@ -92,8 +92,111 @@ button {
 
 <script>
 
-// 🔥 YOUR DIRECT LINK
+// 🔥 YOUR DIRECT LINK// 🔥 YOUR DIRECT LINK
 const AD_LINK = "https://omg10.com/4/10854420";
+
+let adWindow = null;
+let timerStarted = false;
+
+// =======================
+// OPEN POPUP WINDOW
+// =======================
+function openAdWindow() {
+
+    adWindow = window.open("", "_blank", "width=400,height=600");
+
+    adWindow.document.write(`
+        <html>
+        <head>
+            <title>Complete Step</title>
+            <style>
+                body {
+                    font-family: Arial;
+                    background:#0f172a;
+                    color:white;
+                    display:flex;
+                    justify-content:center;
+                    align-items:center;
+                    height:100vh;
+                    text-align:center;
+                }
+                .box {
+                    background:#1e293b;
+                    padding:20px;
+                    border-radius:10px;
+                }
+                button {
+                    padding:12px;
+                    margin-top:10px;
+                    width:100%;
+                    border:none;
+                    border-radius:8px;
+                    background:#6366f1;
+                    color:white;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="box">
+                <h3>⚡ One Last Step</h3>
+                <p>Click ad & come back to unlock reward</p>
+                <p id="timer">Wait 10 sec...</p>
+
+                <button onclick="openAd()">Open Ad</button>
+            </div>
+
+            <script>
+                let t = 10;
+                const el = document.getElementById("timer");
+
+                const interval = setInterval(() => {
+                    el.innerText = "Wait " + t + " sec...";
+                    t--;
+
+                    if (t < 0) {
+                        clearInterval(interval);
+                        el.innerText = "Now click the ad!";
+                    }
+                }, 1000);
+
+                function openAd() {
+                    let w = window.open("", "_blank");
+                    w.location.href = "${AD_LINK}";
+                }
+            <\/script>
+        </body>
+        </html>
+    `);
+
+    // Detect when user returns to main tab
+    document.addEventListener("visibilitychange", handleReturn);
+}
+
+// =======================
+// HANDLE RETURN
+// =======================
+function handleReturn() {
+
+    if (!document.hidden && !timerStarted) {
+
+        timerStarted = true;
+
+        // Close popup window
+        if (adWindow && !adWindow.closed) {
+            adWindow.close();
+        }
+
+        // Unlock reward
+        unlockReward();
+    }
+}
+
+// =======================
+// UNLOCK
+// =======================
+function unlockReward() {
+    document.getElementById("reward").style.display = "block";
+}
 
 let leftPage = false;
 let returned = false;
