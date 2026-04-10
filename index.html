@@ -1,23 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script>(function(s){s.dataset.zone='10857564',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-    <script>(function(s){s.dataset.zone='10854417',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-    <script src="https://5gvci.com/act/files/tag.min.js?z=10857526" data-cfasync="false" async></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- ✅ MONETAG VERIFY -->
+<!-- Monetag Verification -->
 <meta name="monetag" content="5981e855b7afc7269ed826a6103d70d9">
 
-<title>AGC Girls ke Secrets</title>
+<title>Unlock Reward</title>
 
 <style>
 body {
     margin:0;
+    font-family:Arial;
     background:#0f172a;
     color:white;
-    font-family:Arial;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -32,21 +29,6 @@ body {
     border-radius:15px;
     text-align:center;
 }
-h2 {
-    font-size: 38px;
-    margin-top: 0;
-    margin-bottom: 15px;
-}
-
-h3 {
-    font-size: 26px;
-    margin-bottom: 15px;
-}
-
-p {
-    font-size: 26px;
-    margin: 10px 0;
-}
 
 button {
     width:100%;
@@ -57,90 +39,67 @@ button {
     background:#6366f1;
     color:white;
     font-size:16px;
-    cursor:pointer;
 }
 
-#reward { display:none; }
-.warning { color:#f87171; }
-.note { color:#facc15; font-size:14px; }
+#adUI, #rewardUI {
+    display:none;
+}
 </style>
 </head>
 
 <body>
-    <div id="adModal" style="
-display:none;
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:rgba(0,0,0,0.85);
-justify-content:center;
-align-items:center;
-z-index:9999;
-">
-
-<div style="
-background:#1e293b;
-padding:20px;
-border-radius:12px;
-width:90%;
-max-width:350px;
-text-align:center;
-color:white;
-">
-
-<h3>⚡ One Last Step</h3>
-<p>Click ad & come back to unlock reward</p>
-
-<p id="modalTimer">Wait 10 sec...</p>
-
-<button id="btn">Watch & Unlock</button>
-
-</div>
-</div>
 
 <div class="container">
-    <h2>🤫🥵 Secrets</h2>
 
-    <p class="Larger-text">
-        ⚠️ OPEN THE AD and COME BACK to unlock reward
-    </p>
-
-    <button onclick="openModal()">Watch & Unlock</button>
-
-    <p id="status"></p>
-    <p id="warning" class="warning"></p>
-
-    <div id="reward">
-        <h3>APNE MEETHE KO TAG KARO🥵</h3>
-        
-        <!-- 🖼️ YOUR CUSTOM IMAGE -->
-        <img src="reward.jpg" style="width:70%;border-radius:7px;">
-        
-        <button onclick="share()">Tag Meetha here 🤫</button>
+    <!-- MAIN UI -->
+    <div id="mainUI">
+        <h2>🎁 Unlock Reward</h2>
+        <button id="startBtn">Start</button>
     </div>
-</div>
 
+    <!-- AD STEP UI -->
+    <div id="adUI">
+        <h3>⚡ One Last Step</h3>
+        <p>Click ad & come back to unlock reward</p>
+        <button id="adBtn">Open Ad</button>
+        <p id="status"></p>
+    </div>
+
+    <!-- REWARD UI -->
+    <div id="rewardUI">
+        <h3>✅ Reward Unlocked</h3>
+        <img src="reward.jpg" style="width:100%;border-radius:10px;">
+    </div>
+
+</div>
 
 <script>
 
+// 🔥 YOUR DIRECT LINK
 const AD_LINK = "https://omg10.com/4/10854420";
 
 let adOpened = false;
 let returned = false;
 
-// BUTTON CLICK
-document.getElementById("btn").onclick = () => {
+// STEP 1 → START
+document.getElementById("startBtn").onclick = () => {
+    document.getElementById("mainUI").style.display = "none";
+    document.getElementById("adUI").style.display = "block";
+};
+
+// STEP 2 → OPEN AD
+document.getElementById("adBtn").onclick = () => {
 
     adOpened = true;
 
-    // open ad
     let win = window.open("", "_blank");
     win.location.href = AD_LINK;
 
-    document.getElementById("status").innerText = "Open ad and come back...";
+    document.getElementById("status").innerText =
+        "Ad opened. Come back to continue...";
 };
 
-// DETECT RETURN (WORKS ON MOBILE)
+// STEP 3 → DETECT RETURN
 document.addEventListener("visibilitychange", () => {
 
     if (!document.hidden && adOpened && !returned) {
@@ -149,34 +108,33 @@ document.addEventListener("visibilitychange", () => {
     }
 });
 
-// TIMER AFTER RETURN
+// STEP 4 → TIMER
 function startTimer() {
     let t = 10;
 
-    const interval = setInterval(() => {
-        document.getElementById("status").innerText =
-            "Wait " + t + " sec...";
+    const status = document.getElementById("status");
 
+    const interval = setInterval(() => {
+        status.innerText = "Wait " + t + " sec...";
         t--;
 
         if (t < 0) {
             clearInterval(interval);
-            unlockReward();
+            showReward();
         }
     }, 1000);
 }
 
-// UNLOCK
-function unlockReward() {
-    document.getElementById("status").innerText = "";
-    document.getElementById("reward").style.display = "block";
+// STEP 5 → SHOW REWARD
+function showReward() {
+    document.getElementById("adUI").style.display = "none";
+    document.getElementById("rewardUI").style.display = "block";
 }
 
 </script>
 
-</h2>
-</h3>
-</p>
- 
+<!-- Monetag Popunder Script (REPLACE WITH YOUR REAL ONE) -->
+<script src="//YOUR-MONETAG-SCRIPT.js"></script>
+
 </body>
 </html>
