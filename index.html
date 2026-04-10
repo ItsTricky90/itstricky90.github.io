@@ -70,11 +70,9 @@ button {
     <div id="adModal" style="
 display:none;
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.8);
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,0.85);
 justify-content:center;
 align-items:center;
 z-index:9999;
@@ -95,10 +93,10 @@ color:white;
 
 <p id="modalTimer">Wait 10 sec...</p>
 
-<button id="adBtn">Open Ad</button>
+<button id="adBtn" disabled>Open Ad</button>
 
 </div>
-    </div>
+</div>
 
 <div class="container">
     <h2>🤫🥵 Secrets</h2>
@@ -127,59 +125,67 @@ color:white;
 // 🔥 YOUR DIRECT LINK// 🔥 YOUR DIRECT LINK
 const AD_LINK = "https://omg10.com/4/10854420";
 
-let leftPage = false;
-let returned = false;
+let adOpened = false;
+
+// MAIN BUTTON
+document.getElementById("mainBtn").onclick = () => {
+    openModal();
+};
 
 // OPEN MODAL
 function openModal() {
     document.getElementById("adModal").style.display = "flex";
-    startModalTimer();
+    startTimer();
 }
 
 // TIMER
-function startModalTimer() {
+function startTimer() {
     let t = 10;
-
-    const el = document.getElementById("modalTimer");
+    const timerEl = document.getElementById("modalTimer");
+    const btn = document.getElementById("adBtn");
 
     const interval = setInterval(() => {
-        el.innerText = "Wait " + t + " sec...";
+        timerEl.innerText = "Wait " + t + " sec...";
         t--;
 
         if (t < 0) {
             clearInterval(interval);
-            el.innerText = "Now click the ad!";
-            document.getElementById("adBtn").onclick = openAd;
+            timerEl.innerText = "Now click the ad!";
+            btn.disabled = false;
         }
     }, 1000);
 }
 
 // OPEN AD
-function openAd() {
+document.getElementById("adBtn").onclick = () => {
+
+    adOpened = true;
+
     let win = window.open("", "_blank");
     win.location.href = AD_LINK;
+
+    // fallback if user doesn't switch tab properly
+    setTimeout(checkReturn, 3000);
+};
+
+// RETURN CHECK (WORKS ON MOBILE)
+function checkReturn() {
+
+    if (adOpened) {
+        unlockReward();
+    }
 }
 
-// DETECT TAB SWITCH
+// ALSO detect tab switch (extra reliability)
 document.addEventListener("visibilitychange", () => {
-
-    if (document.hidden) {
-        leftPage = true;
-    }
-
-    if (!document.hidden && leftPage && !returned) {
-        returned = true;
-
-        // CLOSE MODAL
-        document.getElementById("adModal").style.display = "none";
-
-        // SHOW REWARD
+    if (!document.hidden && adOpened) {
         unlockReward();
     }
 });
 
 // UNLOCK
 function unlockReward() {
+    document.getElementById("adModal").style.display = "none";
     document.getElementById("reward").style.display = "block";
 }
 // =======================
