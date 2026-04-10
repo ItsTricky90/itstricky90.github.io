@@ -93,7 +93,7 @@ color:white;
 
 <p id="modalTimer">Wait 10 sec...</p>
 
-<button id="adBtn" disabled>Open Ad</button>
+<button id="btn">Watch & Unlock</button>
 
 </div>
 </div>
@@ -120,199 +120,57 @@ color:white;
     </div>
 </div>
 
+
 <script>
 
-// 🔥 YOUR DIRECT LINK// 🔥 YOUR DIRECT LINK
 const AD_LINK = "https://omg10.com/4/10854420";
 
 let adOpened = false;
+let returned = false;
 
-// MAIN BUTTON
-document.getElementById("mainBtn").onclick = () => {
-    openModal();
-};
-
-// OPEN MODAL
-function openModal() {
-    document.getElementById("adModal").style.display = "flex";
-    startTimer();
-}
-
-// TIMER
-function startTimer() {
-    let t = 10;
-    const timerEl = document.getElementById("modalTimer");
-    const btn = document.getElementById("adBtn");
-
-    const interval = setInterval(() => {
-        timerEl.innerText = "Wait " + t + " sec...";
-        t--;
-
-        if (t < 0) {
-            clearInterval(interval);
-            timerEl.innerText = "Now click the ad!";
-            btn.disabled = false;
-        }
-    }, 1000);
-}
-
-// OPEN AD
-document.getElementById("adBtn").onclick = () => {
+// BUTTON CLICK
+document.getElementById("btn").onclick = () => {
 
     adOpened = true;
 
+    // open ad
     let win = window.open("", "_blank");
     win.location.href = AD_LINK;
 
-    // fallback if user doesn't switch tab properly
-    setTimeout(checkReturn, 3000);
+    document.getElementById("status").innerText = "Open ad and come back...";
 };
 
-// RETURN CHECK (WORKS ON MOBILE)
-function checkReturn() {
-
-    if (adOpened) {
-        unlockReward();
-    }
-}
-
-// ALSO detect tab switch (extra reliability)
-document.addEventListener("visibilitychange", () => {
-    if (!document.hidden && adOpened) {
-        unlockReward();
-    }
-});
-
-// UNLOCK
-function unlockReward() {
-    document.getElementById("adModal").style.display = "none";
-    document.getElementById("reward").style.display = "block";
-}
-// =======================
-// HANDLE RETURN
-// =======================
-function handleReturn() {
-
-    if (!document.hidden && !timerStarted) {
-
-        timerStarted = true;
-
-        // Close popup window
-        if (adWindow && !adWindow.closed) {
-            adWindow.close();
-        }
-
-        // Unlock reward
-        unlockReward();
-    }
-}
-
-// =======================
-// UNLOCK
-// =======================
-function unlockReward() {
-    document.getElementById("reward").style.display = "block";
-}
-
-let leftPage = false;
-let returned = false;
-let adblockDetected = false;
-
-// =======================
-// ADBLOCK DETECTION
-// =======================
-function detectAdBlock() {
-    let test = document.createElement("div");
-    test.className = "adsbox";
-    test.style.height = "1px";
-    document.body.appendChild(test);
-
-    setTimeout(() => {
-        if (test.offsetHeight === 0) {
-            adblockDetected = true;
-            document.getElementById("warning").innerText =
-                "❌ Disable AdBlock to continue!";
-        }
-        test.remove();
-    }, 100);
-}
-
-// =======================
-// TAB DETECTION
-// =======================
+// DETECT RETURN (WORKS ON MOBILE)
 document.addEventListener("visibilitychange", () => {
 
-    if (document.hidden) {
-        leftPage = true;
-    }
-
-    if (!document.hidden && leftPage && !returned) {
+    if (!document.hidden && adOpened && !returned) {
         returned = true;
-        //startTimer(); // ✅ start ONLY after return
+        startTimer();
     }
 });
 
-// =======================
-// START AD
-// =======================
-function startAd() {
-
-    if (adblockDetected) {
-        document.getElementById("warning").innerText =
-            "❌ Disable AdBlock!";
-        return;
-    }
-
-    document.getElementById("status").innerText = "Opening ad...";
-
-    // 🔥 Anti-block trick
-    let win = window.open("https://omg10.com/4/10854420","_blank");
-    win.location.href = AD_LINK;
-}
-
-// =======================
-// TIMER
-// =======================
+// TIMER AFTER RETURN
 function startTimer() {
-    let time = 7;
+    let t = 10;
 
     const interval = setInterval(() => {
         document.getElementById("status").innerText =
-            "Wait " + time + " sec...";
+            "Wait " + t + " sec...";
 
-        time--;
+        t--;
 
-        if (time < 0) {
+        if (t < 0) {
             clearInterval(interval);
             unlockReward();
         }
     }, 1000);
 }
 
-// =======================
 // UNLOCK
-// =======================
 function unlockReward() {
     document.getElementById("status").innerText = "";
     document.getElementById("reward").style.display = "block";
 }
-
-// =======================
-// SHARE
-// =======================
-function share() {
-    const msg = "😂 Tag that bro: " + window.location.href;
-    navigator.clipboard.writeText(msg);
-    window.open("https://wa.me/?text=" + encodeURIComponent(msg));
-}
-
-// =======================
-// INIT
-// =======================
-document.addEventListener("DOMContentLoaded", () => {
-    detectAdBlock();
-    document.getElementById("btn").onclick = startAd;
-});
 
 </script>
 
