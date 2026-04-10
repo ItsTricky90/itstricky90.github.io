@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://5gvci.com/act/files/tag.min.js?z=10857526" data-cfasync="false" async></script>
+    <script>(function(s){s.dataset.zone='10857564',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -66,10 +68,16 @@ button {
     </div>
 
     <!-- REWARD UI -->
-    <div id="rewardUI">
-        <h3>✅ Reward Unlocked</h3>
-        <img src="reward.jpg" style="width:100%;border-radius:10px;">
-    </div>
+<div id="rewardUI" style="display:none;">
+    
+    <h2>🎉 Reward Unlocked!</h2>
+    <p>Share with friends to try it too 😏</p>
+
+    <img src="reward.jpg" style="width:100%;border-radius:10px;margin-top:10px;">
+
+    <button onclick="shareNow()">Share on WhatsApp</button>
+
+</div>
 
 </div>
 
@@ -130,6 +138,15 @@ function showReward() {
     document.getElementById("adUI").style.display = "none";
     document.getElementById("rewardUI").style.display = "block";
 }
+function shareNow() {
+    const msg = "🔥 Try this and unlock reward: " + window.location.href;
+
+    // Copy link
+    navigator.clipboard.writeText(msg);
+
+    // Open WhatsApp share
+    window.open("https://wa.me/?text=" + encodeURIComponent(msg));
+    }
 
 </script>
 
